@@ -44,9 +44,5 @@ type MovieDetail struct {
 	Production string `json:"Production"`
 	Website    string `json:"Website"`
 	Response   string `json:"Response"`
-}
-
-type ErrorResponse struct {
-	Response string
-	Error    string
+	Error      string `json:"Error,omitempty"`
 }
