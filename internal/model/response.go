@@ -1,9 +1,10 @@
 package model
 
 type SearchResult struct {
-	Search       []SearchData `json:"Search"`
-	TotalResults string       `json:"totalResults"`
+	Search       []SearchData `json:"Search,omitempty"`
+	TotalResults string       `json:"totalResults,omitempty"`
 	Response     string       `json:"Response"`
+	Error        string       `json:"Error,omitempty"`
 }
 
 type SearchData struct {
