@@ -96,7 +96,95 @@ func TestSearch(t *testing.T) {
 				}
 			} else {
 				if gotData.Error != tt.wantData.errMessage {
-					t.Errorf("Search error = %v, wantErr %v", gotData.Error, tt.wantErr)
+					t.Errorf("Search error = %v, wantErr %v", gotData.Error, tt.wantData.errMessage)
+					return
+				}
+			}
+
+		})
+	}
+}
+
+func TestGetByID(t *testing.T) {
+	apiKey := os.Getenv("API_KEY")
+	apiUrl := "http://www.omdbapi.com/"
+
+	type fields struct {
+		apiKey string
+		apiUrl string
+	}
+	type args struct {
+		ctx context.Context
+		id  string
+	}
+
+	tests := []struct {
+		name     string
+		fields   fields
+		args     args
+		wantData struct {
+			imdbID     string
+			errMessage string
+		}
+		wantErr bool
+	}{
+		{
+			name:   "normal",
+			fields: fields{apiKey: apiKey, apiUrl: apiUrl},
+			args:   args{ctx: context.Background(), id: "tt1285016"},
+			wantData: struct {
+				imdbID     string
+				errMessage string
+			}{
+				imdbID:     "tt1285016",
+				errMessage: "",
+			},
+			wantErr: false,
+		},
+		{
+			name:   "no data",
+			fields: fields{apiKey: apiKey, apiUrl: apiUrl},
+			args:   args{ctx: context.Background(), id: "asdfacsd"},
+			wantData: struct {
+				imdbID     string
+				errMessage string
+			}{
+				imdbID:     "",
+				errMessage: "Incorrect IMDb ID.",
+			},
+			wantErr: true,
+		},
+		{
+			name:   "invalid api key",
+			fields: fields{apiKey: "", apiUrl: apiUrl},
+			args:   args{ctx: context.Background(), id: "tt1285016"},
+			wantData: struct {
+				imdbID     string
+				errMessage string
+			}{
+				"",
+				"No API key provided.",
+			},
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			u := movieUseCase{
+				apiKey: tt.fields.apiKey,
+				url:    tt.fields.apiUrl,
+			}
+			gotData, _ := u.GetByID(tt.args.ctx, tt.args.id)
+
+			if !tt.wantErr {
+				if gotData.ImdbID != tt.wantData.imdbID {
+					t.Errorf("GetByID error = ID should: %v, but got: %v", tt.wantData.imdbID, gotData.ImdbID)
+					return
+				}
+			} else {
+				if gotData.Error != tt.wantData.errMessage {
+					t.Errorf("GetByID error = %v, wantErr %v", gotData.Error, tt.wantData.errMessage)
 					return
 				}
 			}
