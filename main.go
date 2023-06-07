@@ -1,17 +1,26 @@
 package main
 
 import (
-	"net/http"
+	"os"
 
+	handler "github.com/fajarabdillahfn/go-movie-omdb/internal/delivery/http"
+	"github.com/fajarabdillahfn/go-movie-omdb/internal/usecase"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	r := gin.Default()
 
-	r.GET("/", func(ctx *gin.Context) {
-		ctx.JSONP(http.StatusOK, "Hello World!")
-	})
+	apiKey := os.Getenv("API_KEY")
+	url := "http://www.omdbapi.com/"
 
-	r.Run()
+	initializedMovieService(apiKey, url).Route(&r.RouterGroup)
+
+	r.Run(":9000")
+}
+
+func initializedMovieService(apiKey, url string) *handler.MovieHandler {
+	movieUsecase := usecase.NewMovieUseCase(apiKey, url)
+
+	return handler.NewMovieHandler(movieUsecase)
 }
