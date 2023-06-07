@@ -1,15 +1,17 @@
 package model
 
 type SearchResult struct {
-	Search []struct {
-		Title  string `json:"Title"`
-		Year   string `json:"Year"`
-		ImdbID string `json:"imdbID"`
-		Type   string `json:"Type"`
-		Poster string `json:"Poster"`
-	} `json:"Search"`
-	TotalResults string `json:"totalResults"`
-	Response     string `json:"Response"`
+	Search       []SearchData `json:"Search"`
+	TotalResults string       `json:"totalResults"`
+	Response     string       `json:"Response"`
+}
+
+type SearchData struct {
+	Title  string `json:"Title"`
+	Year   string `json:"Year"`
+	ImdbID string `json:"imdbID"`
+	Type   string `json:"Type"`
+	Poster string `json:"Poster"`
 }
 
 type MovieDetail struct {
@@ -41,4 +43,9 @@ type MovieDetail struct {
 	Production string `json:"Production"`
 	Website    string `json:"Website"`
 	Response   string `json:"Response"`
+}
+
+type ErrorResponse struct {
+	Response string
+	Error    string
 }

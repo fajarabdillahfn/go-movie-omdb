@@ -7,18 +7,18 @@ import (
 )
 
 type MovieUseCase interface {
-	Search(ctx context.Context, param *model.SearchParameter) (*model.SearchResult, error)
-	GetByID(ctx context.Context, id string) (*model.MovieDetail, error)
+	Search(ctx context.Context, param *model.SearchParameter) (*model.SearchResult, *model.ErrorResponse)
+	GetByID(ctx context.Context, id string) (*model.MovieDetail, *model.ErrorResponse)
 }
 
 type movieUseCase struct {
 	apiKey string
 }
 
-func (u *movieUseCase) Search(ctx context.Context, param *model.SearchParameter) (*model.SearchResult, error) {
+func (u *movieUseCase) Search(ctx context.Context, param *model.SearchParameter) (*model.SearchResult, *model.ErrorResponse) {
 	return nil, nil
 }
 
-func (u *movieUseCase) GetByID(ctx context.Context, id string) (*model.MovieDetail, error) {
+func (u *movieUseCase) GetByID(ctx context.Context, id string) (*model.MovieDetail, *model.ErrorResponse) {
 	return nil, nil
 }
