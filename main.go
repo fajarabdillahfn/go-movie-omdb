@@ -16,7 +16,7 @@ func main() {
 
 	initializedMovieService(apiKey, url).Route(&r.RouterGroup)
 
-	r.Run(":9000")
+	r.Run(":" + os.Getenv("PORT"))
 }
 
 func initializedMovieService(apiKey, url string) *handler.MovieHandler {
