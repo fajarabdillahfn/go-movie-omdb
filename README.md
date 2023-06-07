@@ -6,6 +6,11 @@ rest api for get movie data from imdb api
 * API_KEY -> for the imdb api key
 * PORT -> service port
 
+## Run the app
+```
+docker-compose up -d
+```
+
 # REST API
 The REST API to the example app is described below.
 
