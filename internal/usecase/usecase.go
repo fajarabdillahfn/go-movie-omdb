@@ -13,6 +13,7 @@ type MovieUseCase interface {
 
 type movieUseCase struct {
 	apiKey string
+	url string
 }
 
 func (u *movieUseCase) Search(ctx context.Context, param *model.SearchParameter) (*model.SearchResult, *model.ErrorResponse) {
