@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  movie-app:
+    build:
+      context: .
+    ports:
+      - ${PORT}:${PORT}
+    restart: always
+    env_file:
+      - .env
+    expose:
+      - ${PORT}
