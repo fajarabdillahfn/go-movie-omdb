@@ -22,6 +22,13 @@ type movieUseCase struct {
 	url    string
 }
 
+func NewMovieUseCase(apiKey, url string) MovieUseCase{
+	return &movieUseCase{
+		apiKey: apiKey,
+		url: url,
+	}
+}
+
 func (u *movieUseCase) Search(ctx context.Context, param *model.SearchParameter) (*model.SearchResult, error) {
 	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
